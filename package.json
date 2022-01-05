@@ -1,0 +1,36 @@
+{
+  "name": "shopkart",
+  "version": "1.0.0",
+  "description": "shopping application backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "api",
+    "backend",
+    "node",
+    "mongodb"
+  ],
+  "author": "Anuj Singh",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.27.1",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "express-fileupload": "^1.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.4",
+    "nodemailer": "^6.7.2",
+    "razorpay": "^2.8.0",
+    "stripe": "^8.195.0",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.15"
+  }
+}
