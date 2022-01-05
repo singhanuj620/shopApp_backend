@@ -1,7 +1,7 @@
 openapi: "3.0.0"
 info:
-  title: learn express and swagger
-  description: segment about writing docs
+  title: Shop Kart
+  description: E Comm backend application
   version: 1.1.0
   contact:
     email: singhanuj620@gmail.com
@@ -39,10 +39,10 @@ components:
       scheme: bearer
 
 paths:
-  /lco:
+  /:
     get:
       tags:
-        - String
+        - Home
       summary: returns a greet message from lco
       responses:
         200:
@@ -57,182 +57,182 @@ paths:
         500:
           description: Internal server error
 
-  /lcoobject:
-    get:
-      tags:
-        - Object
-      summary: returns a unique responses
-      responses:
-        200:
-          description: All good and success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  name:
-                    type: string
-                  price:
-                    type: number
-        400:
-          description: Bad request
-        500:
-          description: Internal server error
+  # /lcoobject:
+  #   get:
+  #     tags:
+  #       - Object
+  #     summary: returns a unique responses
+  #     responses:
+  #       200:
+  #         description: All good and success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 id:
+  #                   type: string
+  #                 name:
+  #                   type: string
+  #                 price:
+  #                   type: number
+  #       400:
+  #         description: Bad request
+  #       500:
+  #         description: Internal server error
 
-  /courses:
-    get:
-      tags:
-        - Array
-      summary: returns all courses
-      responses:
-        200:
-          description: All good and success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: string
-                    name:
-                      type: string
-                    price:
-                      type: number
-        400:
-          description: Bad request
-        500:
-          description: Internal server error
+  # /courses:
+  #   get:
+  #     tags:
+  #       - Array
+  #     summary: returns all courses
+  #     responses:
+  #       200:
+  #         description: All good and success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: array
+  #               items:
+  #                 type: object
+  #                 properties:
+  #                   id:
+  #                     type: string
+  #                   name:
+  #                     type: string
+  #                   price:
+  #                     type: number
+  #       400:
+  #         description: Bad request
+  #       500:
+  #         description: Internal server error
 
-  /mycourse/{courseId}:
-    get:
-      tags:
-        - String
-      summary: returns course based on request ID
-      parameters:
-        - name: courseId
-          in: path
-          required: true
-          default: 22
-          schema:
-            type: string
-      responses:
-        200:
-          description: All good and success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  name:
-                    type: string
-                  price:
-                    type: number
-        400:
-          description: Bad request
-        500:
-          description: Internal server error
+  # /mycourse/{courseId}:
+  #   get:
+  #     tags:
+  #       - String
+  #     summary: returns course based on request ID
+  #     parameters:
+  #       - name: courseId
+  #         in: path
+  #         required: true
+  #         default: 22
+  #         schema:
+  #           type: string
+  #     responses:
+  #       200:
+  #         description: All good and success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 id:
+  #                   type: string
+  #                 name:
+  #                   type: string
+  #                 price:
+  #                   type: number
+  #       400:
+  #         description: Bad request
+  #       500:
+  #         description: Internal server error
 
-  /addCourse:
-    post:
-      tags:
-        - String
-      summary: adds a new course to exisiting courses
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: string
-                name:
-                  type: string
-                price:
-                  type: number
-      responses:
-        200:
-          description: All good and success
-          content:
-            application/json:
-              schema:
-                type: boolean
-        400:
-          description: Bad request
-        500:
-          description: Internal server error
+  # /addCourse:
+  #   post:
+  #     tags:
+  #       - String
+  #     summary: adds a new course to exisiting courses
+  #     consumes:
+  #       - application/json
+  #     produces:
+  #       - application/json
+  #     requestBody:
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               id:
+  #                 type: string
+  #               name:
+  #                 type: string
+  #               price:
+  #                 type: number
+  #     responses:
+  #       200:
+  #         description: All good and success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: boolean
+  #       400:
+  #         description: Bad request
+  #       500:
+  #         description: Internal server error
 
-  /coursequery:
-    get:
-      tags:
-        - String
-      summary: trying to learn about query
+  # /coursequery:
+  #   get:
+  #     tags:
+  #       - String
+  #     summary: trying to learn about query
 
-      parameters:
-        - name: location
-          in: query
-          required: true
-          schema:
-            type: string
-            enum: [delhi, london, mirzapur]
+  #     parameters:
+  #       - name: location
+  #         in: query
+  #         required: true
+  #         schema:
+  #           type: string
+  #           enum: [delhi, london, mirzapur]
 
-        - name: device
-          in: query
-          required: true
-          schema:
-            type: string
-            enum: [web, mobile]
+  #       - name: device
+  #         in: query
+  #         required: true
+  #         schema:
+  #           type: string
+  #           enum: [web, mobile]
 
-      responses:
-        200:
-          description: All good and success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  location:
-                    type: string
-                  device:
-                    type: string
-        400:
-          description: Bad request
-        500:
-          description: Internal server error
+  #     responses:
+  #       200:
+  #         description: All good and success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               type: object
+  #               properties:
+  #                 location:
+  #                   type: string
+  #                 device:
+  #                   type: string
+  #       400:
+  #         description: Bad request
+  #       500:
+  #         description: Internal server error
 
-  /courseupload:
-    post:
-      tags:
-        - String
-      summary: uploading course image
-      parameters:
-        - in: header
-          name: auth
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                file:
-                  type: string
-                  format: binary
+  # /courseupload:
+  #   post:
+  #     tags:
+  #       - String
+  #     summary: uploading course image
+  #     parameters:
+  #       - in: header
+  #         name: auth
+  #     requestBody:
+  #       content:
+  #         multipart/form-data:
+  #           schema:
+  #             type: object
+  #             properties:
+  #               file:
+  #                 type: string
+  #                 format: binary
 
-      responses:
-        200:
-          description: All good and success
+  #     responses:
+  #       200:
+  #         description: All good and success
 
-        400:
-          description: Bad request
-        500:
-          description: Internal server error
+  #       400:
+  #         description: Bad request
+  #       500:
+  #         description: Internal server error
