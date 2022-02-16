@@ -2,7 +2,6 @@ const User = require('../models/user')
 const BigPromise = require("../middlewares/bigPromise");
 const CustomError = require("../utils/customError")
 const cookieToken = require("../utils/cookieToken")
-const fileUpload = require("express-fileupload");
 const cloudinary = require('cloudinary');
 const emailHelper = require("../utils/emailHelper");
 const crypto = require('crypto')
@@ -62,6 +61,7 @@ exports.login = BigPromise(
 exports.logout = BigPromise(
     async (req, res, next) => {
         res.cookie('token', null, { expires: new Date(Date.now()), httpOnly: true })
+        res.cookie('jwtToken', null, { expires: new Date(Date.now()), httpOnly: true })
         res.status(200).json({
             success: true,
             message: 'Logged out successfully'
@@ -139,3 +139,111 @@ exports.passwordReset = BigPromise(
     }
 );
 
+exports.getLoggedInUserDetails = BigPromise(
+    async (req, res, next) => {
+        const user = await User.findById(req.user._id);
+        res.status(200).json({
+            success: true,
+            data: user
+        });
+    }
+);
+
+exports.changePassword = BigPromise(
+    async (req, res, next) => {
+        const user = await User.findById(req.user._id).select('+password');
+        const isCorrectOldPassword = await user.isValidatedPassword(req.body.oldPassword);
+        if (!isCorrectOldPassword) {
+            return next(new CustomError('Incorrect old password', 400))
+        }
+        if (req.body.newPassword !== req.body.confirmPassword) {
+            return next(new CustomError('Password and confirm password must be same', 400))
+        }
+        user.password = req.body.newPassword;
+        await user.save();
+        cookieToken(user, res)
+    }
+);
+
+exports.updateUserDetails = BigPromise(
+    async (req, res, next) => {
+        const newData = {
+            name: req.body.name,
+            email: req.body.email,
+        }
+        if (req.files) {
+            const user = await User.findById(req.user._id)
+            const photoDeleted = await cloudinary.v2.uploader.destroy(user.photo.id);
+            const result = await cloudinary.v2.uploader.upload(req.files.photo.tempFilePath, {
+                folder: "users",
+                width: 150,
+                crop: "scale"
+            })
+            newData.photo = {
+                id: result.public_id,
+                secure_url: result.secure_url
+            }
+        }
+
+        const user = await User.findByIdAndUpdate(req.user._id, newData, { new: true, runValidators: true, useFindAndModify: false });
+        res.status(200).json({
+            success: true,
+            data: user
+        });
+    }
+);
+
+exports.adminAllUser = BigPromise(
+    async (req, res, next) => {
+        const users = await User.find();
+        res.status(200).json({
+            success: true,
+            data: users
+        });
+    }
+)
+
+exports.adminGetOneUser = BigPromise(
+    async (req, res, next) => {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return next(new CustomError('User not found', 404))
+        }
+        res.status(200).json({
+            success: true,
+            data: user
+        });
+    }
+)
+
+exports.adminUpdateOneUserDetails = BigPromise(
+    async (req, res, next) => {
+        const newData = {
+            name: req.body.name,
+            email: req.body.email,
+            role: req.body.role
+        }
+
+        const user = await User.findByIdAndUpdate(req.params.id, newData, { new: true, runValidators: true, useFindAndModify: false });
+        res.status(200).json({
+            success: true,
+            data: user
+        });
+    }
+);
+
+exports.adminDeleteOneUser = BigPromise(
+    async (req, res, next) => {
+        const user = await User.findById(req.params.user);
+        if (!user) {
+            return next(new CustomError('User not found', 404))
+        }
+
+        const imageId = user.photo.id;
+        await cloudinary.v2.uploader.destroy(imageId);
+        await user.remove();
+        res.status(200).json({
+            success: true,
+        });
+    }
+);
