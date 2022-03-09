@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 exports.isLoggedIn = BigPromise(
     async (req, res, next) => {
-        const token = req.cookies.token || req.headers("Authorization").replace("Bearer ", "");
+        const token = req.cookies.token || req.header("Authorization").replace("Bearer ", "");
         if (!token) {
             return next(new CustomError("Please login", 401));
         }

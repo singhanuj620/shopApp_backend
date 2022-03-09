@@ -36,7 +36,7 @@ const productSchema = new mongoose.Schema({
             message: 'Please select category from the list : shortsleeves, longsleeves, sweatshirt, hoodies'
         }
     },
-    brands: {
+    brand: {
         type: String,
         required: [true, 'Please select brand from the list : adidas, nike, puma, reebok, jordan'],
         enum: {
