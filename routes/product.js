@@ -27,6 +27,7 @@ router.route("/review")
     .delete(isLoggedIn, deleteReview);
 router.route("/reviews").get(getOnlyReviewsForOneProduct);
 
+
 // admin route
 router.route("/admin/products").get(isLoggedIn, customRole("admin"), adminGetAllProduct)
 router.route("/admin/product/add").post(isLoggedIn, customRole("admin"), addProduct)
