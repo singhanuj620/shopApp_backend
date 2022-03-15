@@ -2,7 +2,7 @@ const express = require('express')
 require('dotenv').config();
 
 const app = express();
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 
@@ -27,7 +27,7 @@ app.use(fileUpload(
 ));
 
 // Morgan Middleware
-app.use(morgan("tiny"));
+// app.use(morgan("tiny"));
 
 // to use ejs
 app.set('view engine', 'ejs');
